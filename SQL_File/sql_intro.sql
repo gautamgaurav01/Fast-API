@@ -1,20 +1,91 @@
+-- =============================================
+-- products_queries_explained.sql
+-- Purpose: Common SQL operations on the `products` table with explanations
+-- =============================================
+-- 1. View all records from the products table
+-- Use: Fetches every column and every row
+SELECT
+    *
+FROM
+    products;
 
---SELECT * FROM products
---SELECT * FROM products where inventory=0 and is_sale=true or price > 200 or id in (1,2,3,4);
+-- 2. Filter with multiple conditions
+-- Use: Returns products that meet ANY of the following:
+--  - inventory is 0 AND product is on sale
+--  - price greater than 200
+--  - id is one of (1,2,3,4)
+-- Note: AND has higher precedence than OR
+SELECT
+    *
+FROM
+    products
+WHERE
+    (
+        inventory = 0
+        AND is_sale = true
+    )
+    OR price > 200
+    OR id IN (1, 2, 3, 4);
 
---SELECT * FROM products where name LIKE '%R%'; -- filtering the details 
+-- 3. Pattern matching using LIKE
+-- Use: Finds products whose name contains letter 'R'
+-- % means any number of characters
+SELECT
+    *
+FROM
+    products
+WHERE
+    name LIKE '%R%';
 
---SElECT * FROM products ORDER BY created_at DESC  --DESC descending ASC ascending
+-- 4. Sorting records
+-- Use: Orders products by newest first
+-- DESC = descending, ASC = ascending
+SELECT
+    *
+FROM
+    products
+ORDER BY
+    created_at DESC;
 
---SELECT * FROM products WHERE price >300 LIMIT 2
+-- 5. Limit result set
+-- Use: Gets only 2 products with price greater than 300
+SELECT
+    *
+FROM
+    products
+WHERE
+    price > 300
+LIMIT
+    2;
 
---INSERT INTO products (name,price,inventory) VALUES ('sandesh',500,1);  -- add items
+-- 6. Insert new product
+-- Use: Adds a new row to the table
+INSERT INTO
+    products (name, price, inventory)
+VALUES
+    ('sandesh', 500, 1);
 
---DELETE FROM products where id =12 ;  --delete rows
+-- 7. Delete a product
+-- Use: Removes the row with id = 12
+-- Warning: This permanently deletes data
+DELETE FROM products
+WHERE
+    id = 12;
 
---UPDATE products SET name = 'TV' , price =400 WHERE id=2  -- update item
+-- 8. Update multiple columns
+-- Use: Changes name and price for product with id = 2
+UPDATE products
+SET
+    name = 'TV',
+    price = 400
+WHERE
+    id = 2;
 
---UPDATE products SET is_sale=false WHERE id =6 RETURNING *  -- update item 
-
-
---SELECT * FROM products
+-- 9. Update and return updated row
+-- Use: Sets is_sale to false and shows the updated record
+-- RETURNING * is supported in PostgreSQL
+UPDATE products
+SET
+    is_sale = false
+WHERE
+    id = 6 RETURNING *;
