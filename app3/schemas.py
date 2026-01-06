@@ -36,6 +36,11 @@ class PostResponse(PostBase):
 
     model_config = ConfigDict(from_attributes=True)
 
+class PostOut(BaseModel):
+    Post: PostResponse
+    votes: int
+
+    model_config = ConfigDict(from_attributes=True)
 
 class UserLogin(BaseModel):
     email: EmailStr
